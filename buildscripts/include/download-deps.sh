@@ -7,7 +7,9 @@
 mkdir -p deps && cd deps
 
 # mbedtls
-[ ! -d mbedtls ] && git clone --depth 1 --branch v$v_mbedtls https://github.com/Mbed-TLS/mbedtls.git mbedtls
+# The release tarball: since 3.6 a git checkout lacks the framework
+# submodule and the generated sources a plain make needs.
+[ ! -d mbedtls ] && $WGET https://github.com/Mbed-TLS/mbedtls/releases/download/mbedtls-${v_mbedtls}/mbedtls-${v_mbedtls}.tar.bz2 && tar -xjf mbedtls-${v_mbedtls}.tar.bz2 && mv mbedtls-${v_mbedtls} mbedtls && rm mbedtls-${v_mbedtls}.tar.bz2
 
 # dav1d
 [ ! -d dav1d ] && git clone --depth 1 --branch $v_dav1d https://code.videolan.org/videolan/dav1d.git dav1d
